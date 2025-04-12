@@ -1,3 +1,6 @@
+from token_type import TOKEN_TYPE_NAMES
+
+
 class Token(object):
     def __init__(self, token_type, lexeme, literal, line):
         self.token_type = token_type
@@ -6,4 +9,4 @@ class Token(object):
         self.line = line
 
     def __str__(self):
-        return f"{self.token_type} {self.lexeme} {self.literal}"
+        return f"{TOKEN_TYPE_NAMES[self.token_type]} {self.lexeme} {self.literal}"

@@ -2,14 +2,14 @@
 LEFT_PAREN = 0
 RIGHT_PAREN = 1
 LEFT_BRACE = 2
-RIGHT_BRACE = 2
-COMMA = 3
-DOT = 4
-MINUS = 5
-PLUS = 6
-SEMICOLON = 7
-SLASH = 8
-STAR = 9
+RIGHT_BRACE = 3
+COMMA = 4
+DOT = 5
+MINUS = 6
+PLUS = 7
+SEMICOLON = 8
+SLASH = 9
+STAR = 10
 
 # 1-2 char tokens
 BANG = 100
@@ -45,3 +45,45 @@ VAR = 314
 WHILE = 315
 
 EOF = 999
+
+TOKEN_TYPE_NAMES = {
+    0: "LEFT_PAREN",
+    1: "RIGHT_PAREN",
+    2: "LEFT_BRACE",
+    3: "RIGHT_BRACE",
+    4: "COMMA",
+    5: "DOT",
+    6: "MINUS",
+    7: "PLUS",
+    8: "SEMICOLON",
+    9: "SLASH",
+    10: "STAR",
+    100: "BANG",
+    101: "BANG_EQUAL",
+    102: "EQUAL",
+    103: "EQUAL_EQUAL",
+    104: "GREATER",
+    105: "GREATER_EQUAL",
+    106: "LESS",
+    107: "LESS_EQUAL",
+    200: "IDENTIFIER",
+    201: "STRING",
+    202: "NUMBER",
+    300: "AND",
+    301: "CLASS",
+    302: "ELSE",
+    303: "FALSE",
+    304: "FUN",
+    305: "FOR",
+    306: "IF",
+    307: "NIL",
+    308: "OR",
+    309: "PRINT",
+    310: "RETURN",
+    311: "SUPER",
+    312: "THIS",
+    313: "TRUE",
+    314: "VAR",
+    315: "WHILE",
+    999: "EOF",
+}
