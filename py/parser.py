@@ -19,10 +19,22 @@ class Parser(object):
             return None
 
     def comma(self):
-        expr = self.expression()
+        expr = self.ternary()
         while self.match(COMMA):
-            expr = CommaExpr(expr, self.expression())
+            expr = CommaExpr(expr, self.ternary())
         return expr
+
+    def ternary(self):
+        condition = self.expression()
+        if self.match(QUESTION):
+            left = self.expression()
+            if self.match(COLON):
+                right = self.expression()
+                return TernaryExpr(condition, left, right)
+            raise self.error(
+                self.peek().token_type, "Missing ':' from '?:' expression."
+            )
+        return condition
 
     def expression(self):
         return self.equality()

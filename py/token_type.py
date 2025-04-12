@@ -10,6 +10,8 @@ PLUS = 7
 SEMICOLON = 8
 SLASH = 9
 STAR = 10
+QUESTION = 11
+COLON = 12
 
 # 1-2 char tokens
 BANG = 100
@@ -58,6 +60,8 @@ TOKEN_TYPE_NAMES = {
     8: "SEMICOLON",
     9: "SLASH",
     10: "STAR",
+    11: "QUESTION",
+    12: "COLON",
     100: "BANG",
     101: "BANG_EQUAL",
     102: "EQUAL",

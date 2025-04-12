@@ -48,3 +48,13 @@ class CommaExpr(Expr):
 
     def accept(self, v):
         return v.visit_comma_expr(self)
+
+
+@dataclass
+class TernaryExpr(Expr):
+    condition: Expr
+    left: Expr
+    right: Expr
+
+    def accept(self, v):
+        return v.visit_ternary_expr(self)
