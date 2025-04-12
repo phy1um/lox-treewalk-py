@@ -19,6 +19,7 @@ class Ctx(object):
         self._isError = True
 
     def token_error(self, token, msg):
+        self._isError = True
         if token.token_type == EOF:
             self._report(token.line, " at end", msg)
         else:

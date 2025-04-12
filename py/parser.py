@@ -40,6 +40,12 @@ class Parser(object):
         return self.equality()
 
     def equality(self):
+        if self.match(BANG_EQUAL, EQUAL_EQUAL):
+            err = self.error(
+                self.previous(), "Missing left hand side of binary operator."
+            )
+            self.comparison()
+            raise err
         expr = self.comparison()
         while self.match(BANG_EQUAL, EQUAL_EQUAL):
             operator = self.previous()
@@ -48,6 +54,12 @@ class Parser(object):
         return expr
 
     def comparison(self):
+        if self.match(GREATER, GREATER_EQUAL, LESS, LESS_EQUAL):
+            err = self.error(
+                self.previous(), "Missing left hand side of binary operator."
+            )
+            self.term()
+            raise err
         expr = self.term()
         while self.match(GREATER, GREATER_EQUAL, LESS, LESS_EQUAL):
             operator = self.previous()
@@ -56,6 +68,12 @@ class Parser(object):
         return expr
 
     def term(self):
+        if self.match(PLUS):
+            err = self.error(
+                self.previous(), "Missing left hand side of binary operator."
+            )
+            self.factor()
+            raise err
         expr = self.factor()
         while self.match(MINUS, PLUS):
             operator = self.previous()
@@ -64,6 +82,12 @@ class Parser(object):
         return expr
 
     def factor(self):
+        if self.match(SLASH, STAR):
+            err = self.error(
+                self.previous(), "Missing left hand side of binary operator."
+            )
+            self.unary()
+            raise err
         expr = self.unary()
         while self.match(SLASH, STAR):
             operator = self.previous()
@@ -100,10 +124,16 @@ class Parser(object):
                 return True
         return False
 
-    def check(self, token_type):
+    def check_any(self, *token_types):
         if self.done():
             return False
-        return self.peek().token_type == token_type
+        for token_type in token_types:
+            if self.peek().token_type == token_type:
+                return True
+        return False
+
+    def check(self, token_type):
+        return self.check_any(token_type)
 
     def advance(self):
         if not self.done():
