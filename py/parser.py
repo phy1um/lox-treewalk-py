@@ -14,9 +14,15 @@ class Parser(object):
 
     def parse(self):
         try:
-            return self.expression()
+            return self.comma()
         except ParseError:
             return None
+
+    def comma(self):
+        expr = self.expression()
+        while self.match(COMMA):
+            expr = CommaExpr(expr, self.expression())
+        return expr
 
     def expression(self):
         return self.equality()

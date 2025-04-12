@@ -39,3 +39,12 @@ class UnaryExpr(Expr):
 
     def accept(self, v):
         return v.visit_unary_expr(self)
+
+
+@dataclass
+class CommaExpr(Expr):
+    left: Expr
+    right: Expr
+
+    def accept(self, v):
+        return v.visit_comma_expr(self)

@@ -13,6 +13,9 @@ class AstPrinter(object):
     def visit_unary_expr(self, e):
         return self._parenthesize(e.operator.lexeme, e.right)
 
+    def visit_comma_expr(self, e):
+        return self._parenthesize(",", e.left, e.right)
+
     def _parenthesize(self, name, *exprs):
         out = ["(", name]
         for expr in exprs:
