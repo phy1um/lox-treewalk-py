@@ -89,6 +89,11 @@ class Scanner(object):
                 if self.done():
                     return None
                 return self.next()
+            if self._match("*"):
+                self._consume_block_comment()
+                if self.done():
+                    return None
+                return self.next()
             else:
                 return self._token(SLASH, None)
         elif c == " " or c == "\r" or c == "\t":
@@ -170,3 +175,16 @@ class Scanner(object):
         if self._current + 1 >= len(self._src):
             return "\0"
         return self._src[self._current + 1]
+
+    def _consume_block_comment(self):
+        while True:
+            if self.done():
+                self._x.error(self._line, "Unterminated block comment.")
+                return
+            n = self._advance()
+            if n == "*" and self._match("/"):
+                return
+            if n == "/" and self._match("*"):
+                self._consume_block_comment()
+            elif n == "\n":
+                self._line += 1
