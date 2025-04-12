@@ -1,5 +1,5 @@
 from token_type import *
-from token import Token
+from lox_token import Token
 
 KEYWORDS = {
     "and": AND,
@@ -55,6 +55,8 @@ class Scanner(object):
             return self._token(COMMA, None)
         elif c == ".":
             return self._token(DOT, None)
+        elif c == "-":
+            return self._token(MINUS, None)
         elif c == "+":
             return self._token(PLUS, None)
         elif c == ";":
