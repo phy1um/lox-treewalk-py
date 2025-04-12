@@ -1,6 +1,6 @@
 from scanner import Scanner
 from parser import Parser
-from ast_printer import AstPrinter
+from interpreter import Interpreter
 from token_type import EOF
 
 
@@ -9,6 +9,7 @@ class Ctx(object):
         import sys
 
         self._isError = False
+        self._is_runtime_error = False
         self._output = sys.stderr
 
     def _report(self, line, where, msg):
@@ -18,6 +19,9 @@ class Ctx(object):
         self._report(line, "", msg)
         self._isError = True
 
+    def runtime_error(self, re):
+        self._report(re.token.line, re.token.lexeme, re.message)
+
     def token_error(self, token, msg):
         self._isError = True
         if token.token_type == EOF:
@@ -26,6 +30,9 @@ class Ctx(object):
             self._report(token.line, f" at '{token.lexeme}'", msg)
 
     def has_error(self):
+        return self._isError or self._is_runtime_error
+
+    def has_parse_error(self):
         return self._isError
 
     def clear_error(self):
@@ -38,7 +45,7 @@ def run(ctx, body):
     parser = Parser(ctx, tokens)
     if ctx.has_error():
         return 1
-    print(AstPrinter().print(parser.parse()))
+    print(Interpreter(ctx).evaluate(parser.parse()))
     return 0
 
 
